@@ -21,7 +21,9 @@ public:
 	void save();
 	void reset();
 	void print();
-
+ 
+  void setWifiCredentials(const char *ssid, const char *password);
+ 
 	int ssidLen;
 	char ssid[32];
 
@@ -36,4 +38,3 @@ public:
 	uint8_t autoExec;
 	
 };
-

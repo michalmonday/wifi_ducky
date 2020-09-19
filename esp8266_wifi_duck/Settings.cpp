@@ -1,5 +1,8 @@
 #include "Settings.h"
 
+extern const char * ssid_initial;
+extern const char * password_initial;
+
 Settings::Settings(){
 
 }
@@ -60,13 +63,8 @@ void Settings::save() {
 void Settings::reset() {
 	if(debug) Serial.println("Reset Settings");
 
-	String _ssid = "WiFi Duck";
-	_ssid.toCharArray(ssid, 32);
-	ssidLen = _ssid.length();
-
-	String _pswd = "quackquack";
-	_pswd.toCharArray(password, 32);
-	passwordLen = _pswd.length();
+  // initial ssid and passwords are defined at the top of esp8266_wifi_duck.ino
+  setWifiCredentials(ssid_initial, password_initial); 
 
 	String _autostart = "autostart.txt";
 	_autostart.toCharArray(autostart, 32);
@@ -87,4 +85,11 @@ void Settings::print() {
 	Serial.println("Hidden SSID = " + (String)hidden);
 	Serial.println("auto. Execute = " + (String)autoExec);
 	Serial.println("Autoscript = '" + (String)autostart + "'");
+}
+
+void Settings::setWifiCredentials(const char *ssid_, const char *password_) {
+  strcpy(ssid, ssid_);
+  strcpy(password, password_);
+  ssidLen = strlen(ssid);
+  passwordLen = strlen(password);
 }

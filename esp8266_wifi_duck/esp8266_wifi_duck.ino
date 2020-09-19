@@ -14,8 +14,8 @@
 #define debug false
 
 /* ============= CHANGE WIFI CREDENTIALS ============= */
-const char *ssid = "WiFi Duck";
-const char *password = "quackquack"; //min 8 chars
+const char *ssid_initial = "WiFi Duck";
+const char *password_initial = "quackquack"; //min 8 chars
 /* ============= ======================= ============= */
 
 AsyncWebServer server(80);
@@ -89,12 +89,15 @@ void setup() {
   
   Serial.begin(BAUD_RATE);
   delay(2000);
-  if(debug) Serial.println("\nstarting...\nSSID: "+ (String)ssid +"\nPassword: "+ (String)password);
+  if(debug) Serial.println("\nstarting...\nSSID: "+ (String)ssid_initial +"\nPassword: "+ (String)password_initial);
 
   EEPROM.begin(4096);
   SPIFFS.begin();
 
+  
   settings.load();
+  settings.reset();
+  
   if(debug) settings.print();
 
   if(settings.autoExec) {
